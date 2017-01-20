@@ -145,9 +145,6 @@ const styles = StyleSheet.create({
     width: 13,
     height: 21,
   },
-  rightButtonIconStyle: {
-
-  },
   defaultImageStyle: {
     height: 24,
     resizeMode: 'contain',
@@ -162,6 +159,7 @@ const propTypes = {
   backButtonTextStyle: Text.propTypes.style,
   leftButtonStyle: View.propTypes.style,
   leftButtonIconStyle: Image.propTypes.style,
+  rightButtonIconStyle: Image.propTypes.style,
   getTitle: PropTypes.func,
   titleWrapperStyle: Text.propTypes.style,
   titleStyle: Text.propTypes.style,
@@ -278,7 +276,7 @@ class NavBar extends React.Component {
       const textStyle = [styles.barRightButtonText, self.props.rightButtonTextStyle,
         state.rightButtonTextStyle];
       const style = [styles.rightButton, self.props.rightButtonStyle, state.rightButtonStyle];
-      const rightButtonStyle = styles.defaultImageStyle;
+      const rightButtonStyle = [styles.defaultImageStyle, state.rightButtonIconStyle];
       if (state.rightButton) {
         let Button = state.rightButton;
         if (wrapBy) {
@@ -296,7 +294,7 @@ class NavBar extends React.Component {
         );
       }
 
-      if (!state.onRight && !!drawer && typeof drawer.toggle === 'function') {
+      if (!onPress && !!drawer && typeof drawer.toggle === 'function') {
         buttonImage = state.drawerImage;
         if (buttonImage || menuIcon) {
           onPress = drawer.toggle;
@@ -329,7 +327,7 @@ class NavBar extends React.Component {
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
                 {menuIcon || <Image
                   source={buttonImage}
-                  style={rightButtonStyle}
+                  style={state.rightButtonIconStyle || styles.defaultImageStyle}
                 />
                 }
               </View>
